@@ -1,0 +1,312 @@
+.app-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: system-ui, sans-serif;
+  color: #142033;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.app-subtitle {
+  margin: 4px 0 0;
+  color: #556;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.search {
+  padding: 10px 12px;
+  border: 1px solid #cfd7e3;
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: min(320px, 100%);
+  background: #fff;
+}
+
+.app-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 20px;
+  align-items: start;
+}
+
+.panel {
+  min-width: 0;
+  border: 1px solid #d7deea;
+  border-radius: 6px;
+  padding: 16px;
+  background: #fff;
+}
+
+.panel-detail {
+  position: sticky;
+  top: 20px;
+  background: #f8fafc;
+}
+
+.form-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.products-shell {
+  display: grid;
+  gap: 16px;
+}
+
+.list-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.list-toolbar h2,
+.form-panel h2,
+.empty-state h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.list-meta {
+  margin: 4px 0 0;
+  color: #667;
+  font-size: 13px;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-reload {
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.btn-primary,
+.btn-reload {
+  background: #234a86;
+  color: #fff;
+  border-color: #234a86;
+  padding: 10px 14px;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #234a86;
+  border-color: #b8c4d9;
+  padding: 10px 14px;
+}
+
+.btn-danger {
+  background: #c0392b;
+  color: #fff;
+  border-color: #c0392b;
+  padding: 10px 14px;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-danger:disabled,
+.btn-reload:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.product-card {
+  border: 1px solid #d7deea;
+  border-radius: 6px;
+  padding: 16px;
+  background: #fff;
+  display: grid;
+  gap: 10px;
+}
+
+.product-card h3 {
+  margin: 0;
+}
+
+.product-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #234a86;
+}
+
+.product-stock {
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.product-actions,
+.form-actions,
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.status,
+.empty {
+  color: #556;
+  margin: 0;
+}
+
+.status-error {
+  color: #9b1c1c;
+}
+
+.status-block {
+  display: grid;
+  gap: 12px;
+}
+
+.product-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field > span {
+  font-weight: 600;
+}
+
+.field input,
+.field select {
+  padding: 10px 12px;
+  border: 1px solid #cfd7e3;
+  border-radius: 6px;
+  font: inherit;
+  background: #fff;
+}
+
+.field-error,
+.field-hint {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.field-error {
+  color: #9b1c1c;
+}
+
+.field-hint {
+  color: #667;
+}
+
+.empty-state {
+  display: grid;
+  gap: 10px;
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 6px;
+  min-width: min(360px, calc(100vw - 40px));
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
+}
+
+.toast-success {
+  background: #e6f6ec;
+  border: 1px solid #8fd1a2;
+  color: #14532d;
+}
+
+.toast-error {
+  background: #fdecec;
+  border: 1px solid #f0a2a2;
+  color: #7f1d1d;
+}
+
+.toast-close {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  color: inherit;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 23, 42, 0.42);
+  padding: 20px;
+}
+
+.modal {
+  width: min(420px, 100%);
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #d7deea;
+  padding: 20px;
+  display: grid;
+  gap: 16px;
+}
+
+.modal h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+@media (max-width: 900px) {
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+
+  .app-header {
+    align-items: stretch;
+  }
+
+  .header-actions {
+    justify-content: stretch;
+  }
+
+  .search {
+    width: 100%;
+  }
+
+  .panel-detail {
+    position: static;
+  }
+}
