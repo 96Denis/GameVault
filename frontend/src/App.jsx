@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import CreateProductForm from "./CreateProductForm.jsx";
-import EditProductForm from "./EditProductForm.jsx";
-import ProductsList from "./ProductsList.jsx";
+import CreateGameForm from "./CreateGameForm.jsx";
+import EditGameForm from "./EditGameForm.jsx";
+import GamesList from "./GamesList.jsx";
 import Toast from "./Toast.jsx";
 import "./App.css";
 
 function App() {
-  const [filtru, setFiltru] = useState("");
   const [mode, setMode] = useState("list");
-  const [editProduct, setEditProduct] = useState(null);
+  const [editGame, setEditGame] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [toast, setToast] = useState(null);
+  const [search, setSearch] = useState("");
+  const [genreFilter, setGenreFilter] = useState("all");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [sortBy, setSortBy] = useState("title");
 
   useEffect(() => {
     if (!toast) {
@@ -26,55 +29,93 @@ function App() {
   };
 
   const handleCreateClick = () => {
-    setEditProduct(null);
+    setEditGame(null);
     setMode("create");
   };
 
-  const handleEdit = (product) => {
-    setEditProduct(product);
+  const handleEdit = (game) => {
+    setEditGame(game);
     setMode("edit");
   };
 
   const handleFormSuccess = (message) => {
     setMode("list");
-    setEditProduct(null);
+    setEditGame(null);
     setRefreshKey((current) => current + 1);
     showToast({ type: "success", message });
   };
 
   const handleFormCancel = () => {
     setMode("list");
-    setEditProduct(null);
+    setEditGame(null);
   };
 
   return (
     <div className="app-shell">
-      {toast ? (
-        <Toast message={toast.message} type={toast.type} onDismiss={() => setToast(null)} />
-      ) : null}
+      {toast ? <Toast message={toast.message} type={toast.type} onDismiss={() => setToast(null)} /> : null}
 
       <header className="app-header">
-        <div>
-          <h1>Catalog produse</h1>
-          <p className="app-subtitle">Listă, creare, editare și ștergere produse</p>
+        <div className="hero-panel">
+          <p className="app-eyebrow">GameVault</p>
+          <h1>Bibliotecă de jocuri</h1>
+          <p className="app-subtitle">
+            Un catalog curat pentru gestionarea jocurilor, cu imagini prin URL, preț estimat, genuri și cerințe de sistem.
+          </p>
         </div>
-        <div className="header-actions">
-          <input
-            className="search"
-            placeholder="Caută..."
-            value={filtru}
-            onChange={(e) => setFiltru(e.target.value)}
-          />
-          <button type="button" className="btn-primary" onClick={handleCreateClick}>
-            + Adaugă produs
+
+        <div className="control-panel">
+          <div className="control-grid">
+            <input
+              className="search"
+              placeholder="Caută titlu sau publisher..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+            <select
+              className="search compact-control"
+              value={genreFilter}
+              onChange={(event) => setGenreFilter(event.target.value)}
+            >
+              <option value="all">Toate genurile</option>
+              <option value="Action RPG">Action RPG</option>
+              <option value="Adventure">Adventure</option>
+              <option value="RPG">RPG</option>
+              <option value="Simulation">Simulation</option>
+              <option value="Strategy">Strategy</option>
+              <option value="Racing">Racing</option>
+              <option value="Sports">Sports</option>
+            </select>
+            <input
+              className="search compact-control"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="Preț max"
+              value={maxPrice}
+              onChange={(event) => setMaxPrice(event.target.value)}
+            />
+            <select className="search compact-control" value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+              <option value="title">Titlu A-Z</option>
+              <option value="price-asc">Preț crescător</option>
+              <option value="price-desc">Preț descrescător</option>
+              <option value="genre">Gen A-Z</option>
+              <option value="year-desc">An descrescător</option>
+            </select>
+          </div>
+
+          <button type="button" className="btn-primary primary-action" onClick={handleCreateClick}>
+            Adaugă joc
           </button>
         </div>
       </header>
 
       <main className="app-main">
         <section className="panel panel-list">
-          <ProductsList
-            filtru={filtru}
+          <GamesList
+            search={search}
+            genreFilter={genreFilter}
+            maxPrice={maxPrice}
+            sortBy={sortBy}
             refreshKey={refreshKey}
             onEdit={handleEdit}
             onNotify={showToast}
@@ -83,18 +124,18 @@ function App() {
 
         <aside className="panel panel-detail">
           {mode === "create" ? (
-            <CreateProductForm
+            <CreateGameForm
               key="create"
-              onSuccess={() => handleFormSuccess("Produsul a fost creat cu succes.")}
+              onSuccess={() => handleFormSuccess("Jocul a fost creat cu succes.")}
               onCancel={handleFormCancel}
             />
           ) : null}
 
-          {mode === "edit" && editProduct ? (
-            <EditProductForm
-              key={editProduct.id}
-              product={editProduct}
-              onSuccess={() => handleFormSuccess("Produsul a fost actualizat cu succes.")}
+          {mode === "edit" && editGame ? (
+            <EditGameForm
+              key={editGame.id}
+              game={editGame}
+              onSuccess={() => handleFormSuccess("Jocul a fost actualizat cu succes.")}
               onCancel={handleFormCancel}
             />
           ) : null}
@@ -102,7 +143,7 @@ function App() {
           {mode === "list" ? (
             <div className="empty-state">
               <h2>Acțiuni rapide</h2>
-              <p className="empty">Alege „Adaugă produs” sau folosește „Editează” din listă.</p>
+              <p className="empty">Folosește butonul de adăugare sau editează un joc direct din listă.</p>
             </div>
           ) : null}
         </aside>

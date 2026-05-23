@@ -1,77 +1,92 @@
-# RestLab
+# GameVault
 
-_Programare Web - Indrumare de laborator prof. dr. ing. Dominic Mircea KRISTÁLY_
+GameVault is a full-stack web application for managing a library of games.
 
-RestLab is a full-stack product catalog application built as the final result of the web programming labs.
+## What it covers
 
-## What the project covers
-
-- REST API development with Spring Boot
-- JSON responses, `@RequestBody`, `ResponseEntity`, `@PutMapping`, `@DeleteMapping`
+- REST API with Spring Boot
+- Spring Data JPA with MySQL in Docker
 - DTOs, validation, and centralized error handling
-- persistence with Spring Data JPA and MySQL
-- logging, metrics, and monitoring support
-- Spring Security with JWT authentication and role-based access
-- automated backend testing
-- React frontend with `useEffect`, Axios, controlled forms, CRUD actions, toast notifications, and delete confirmation
+- Spring Security with JWT
+- React frontend with Axios, controlled forms, toast notifications, and delete confirmation
+- CRUD for games with image URLs, estimated prices, genres, platforms, descriptions, and system requirements
 
-## Scope
+## Game domain
 
-The application manages products in a catalog:
+Each game stores:
 
-- lists products from the backend
-- filters products by name on the client side
-- shows product details
-- creates and edits products through forms
-- deletes products with confirmation
-- validates data on both frontend and backend
+- `title`
+- `publisher`
+- `releaseYear`
+- `platform`
+- `genre`
+- `estimatedPrice`
+- `description`
+- `imageUrl`
+- `systemRequirements`
+
+## Features
+
+- list games
+- add games
+- edit games
+- delete games with confirmation
+- filter by title, genre, and maximum price
+- sort by title, price, genre, and release year
+- display cover images by URL
 
 ## Project structure
 
 ```text
 backend/   Spring Boot REST API, security, persistence, validation, tests
-frontend/  React + Vite interface for the product catalog
+frontend/  React + Vite interface for GameVault
 ```
-
-## Lab progression behind the project
-
-| Lab | Topic | What was added to this project |
-| --- | --- | --- |
-| 4 | REST API with Spring Boot | controller basics, JSON, request/response handling |
-| 5 | Spring Data JPA and MySQL | persistent products and categories |
-| 6 | DTOs, validation, error handling | request/response DTOs and centralized exceptions |
-| 7 | Logging and metrics | application logs and metrics integration |
-| 8 | Spring Security and JWT | authentication, authorization, CORS |
-| 9 | Automated testing | backend tests for main layers |
-| 10 | React basics | components, props, state, JSX |
-| 11 | REST API integration in React | `useEffect`, Axios, loading product lists |
-| 12 | CRUD in React | controlled forms, create/edit/delete, toast feedback |
-
-## Main technologies
-
-- React
-- Vite
-- Axios
-- Spring Boot
-- Spring Security
-- Spring Data JPA
-- JWT
-- MySQL
 
 ## Run locally
 
-1. Start the MySQL container from `backend/docker-compose.yml`.
-2. Run the Spring Boot backend from `backend/`.
-3. Run the React frontend from `frontend/`.
-4. Open the frontend in the browser.
+1. Start the MySQL container:
 
-During development, the frontend uses `http://localhost:8080/api`.
+```bash
+cd backend
+docker compose up -d
+```
+
+2. Start the backend:
+
+```bash
+mvn spring-boot:run
+```
+
+3. Start the frontend:
+
+```bash
+cd frontend
+npm run dev
+```
+
+4. Open the frontend in the browser, usually at `http://localhost:5173`.
+
+The frontend uses `http://localhost:8080/api` during development.
 
 ## Database
 
-The project uses MySQL in Docker. The compose file is in `backend/docker-compose.yml` and creates:
+The Docker compose file creates:
 
-- database name: `rest_lab_db`
+- database name: `gamevault_db`
 - user: `labuser`
 - password: `labpass`
 - port: `3306`
+
+The current schema used by the application contains:
+
+- `games` for the main CRUD entity
+- `users` and `user_roles` for JWT-authenticated write access
+
+There are no test tables, actuator tables, product tables, or category tables in the active schema after the cleanup.
+
+The seeded games are imported from the older XML catalog and adapted to the current GameVault model.
+
+## Notes
+
+- The app keeps JWT-based authentication from the original project.
+- The frontend logs in with the seeded `admin / admin123` account to perform write operations.

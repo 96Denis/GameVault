@@ -6,7 +6,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: rest_lab_db
+      MYSQL_DATABASE: gamevault_db
       MYSQL_USER: labuser
       MYSQL_PASSWORD: labpass
     volumes:

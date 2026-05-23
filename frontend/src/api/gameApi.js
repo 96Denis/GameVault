@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
-const AUTH_STORAGE_KEY = "restlab.jwt";
+const AUTH_STORAGE_KEY = "gamevault.jwt";
 const AUTH_CREDENTIALS = {
   username: "admin",
   password: "admin123",
@@ -86,23 +86,15 @@ const requestWithAuth = async (config) => {
   }
 };
 
-export const productApi = {
+export const gameApi = {
   getAll: async (config) => {
-    const response = await requestWithAuth({ method: "get", url: "/products", ...config });
+    const response = await requestWithAuth({ method: "get", url: "/games", ...config });
     return response.data;
   },
   getById: async (id, config) => {
     const response = await requestWithAuth({
       method: "get",
-      url: `/products/${id}`,
-      ...config,
-    });
-    return response.data;
-  },
-  getCategories: async (config) => {
-    const response = await requestWithAuth({
-      method: "get",
-      url: "/categories",
+      url: `/games/${id}`,
       ...config,
     });
     return response.data;
@@ -110,7 +102,7 @@ export const productApi = {
   create: async (payload, config) => {
     const response = await requestWithAuth({
       method: "post",
-      url: "/products",
+      url: "/games",
       data: payload,
       ...config,
     });
@@ -119,7 +111,7 @@ export const productApi = {
   update: async (id, payload, config) => {
     const response = await requestWithAuth({
       method: "put",
-      url: `/products/${id}`,
+      url: `/games/${id}`,
       data: payload,
       ...config,
     });
@@ -128,7 +120,7 @@ export const productApi = {
   remove: async (id, config) => {
     const response = await requestWithAuth({
       method: "delete",
-      url: `/products/${id}`,
+      url: `/games/${id}`,
       ...config,
     });
     return response.data;
