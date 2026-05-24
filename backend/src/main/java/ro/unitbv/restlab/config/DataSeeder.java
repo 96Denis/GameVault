@@ -23,30 +23,9 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (userRepository.count() == 0) {
-            AppUser admin = AppUser.builder()
-                    .username("admin")
-                    .password(passwordEncoder.encode("admin123"))
-                    .enabled(true)
-                    .roles(Set.of("ADMIN"))
-                    .build();
-
-            AppUser user = AppUser.builder()
-                    .username("user")
-                    .password(passwordEncoder.encode("user123"))
-                    .enabled(true)
-                    .roles(Set.of("USER"))
-                    .build();
-
-            AppUser manager = AppUser.builder()
-                    .username("manager")
-                    .password(passwordEncoder.encode("manager123"))
-                    .enabled(true)
-                    .roles(Set.of("MANAGER"))
-                    .build();
-
-            userRepository.saveAll(Set.of(admin, user, manager));
-        }
+        seedUser("admin", "admin123", Set.of("ADMIN"));
+        seedUser("user", "user123", Set.of("USER"));
+        seedUser("manager", "manager123", Set.of("MANAGER"));
 
         seedGame(
                 "Cyberpunk 2077",
@@ -147,6 +126,19 @@ public class DataSeeder implements CommandLineRunner {
                 "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg",
                 "Minimum: Core i5-8400, 16GB RAM, GTX 1060 6GB | Recommended: Core i7-9700, 16GB RAM, RTX 2060 / RX 5700"
         );
+    }
+
+    private void seedUser(String username, String rawPassword, Set<String> roles) {
+        if (userRepository.findByUsername(username).isPresent()) {
+            return;
+        }
+
+        userRepository.save(AppUser.builder()
+                .username(username)
+                .password(passwordEncoder.encode(rawPassword))
+                .enabled(true)
+                .roles(roles)
+                .build());
     }
 
     private void seedGame(
